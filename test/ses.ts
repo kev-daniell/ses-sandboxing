@@ -1,6 +1,7 @@
 import assert from 'assert';
 import { describe, it } from 'node:test';
 import '../src/lockdown';
+import { foo, fooClass } from '../src';
 
 // Test to verify that monkey patching coins.get is blocked
 describe('SES Negative Tests', function () {
@@ -30,5 +31,22 @@ describe('SES Negative Tests', function () {
       // @ts-ignore
       globalThis.testv.prototype.test();
     });
+  });
+
+  it('Malicious foo function', function () {  
+    assert.throws(() => {
+      console.log('Array.prototype.push test');
+      foo();
+    })
+  });
+
+  it('Malicious foo class', function () {  
+    assert.throws(() => {
+      console.log('Array.prototype.push test');
+      fooClass.prototype.test = () => { console.log('oevrride ')}
+      const f = new fooClass();
+      f.test();
+      
+    })
   });
 });
