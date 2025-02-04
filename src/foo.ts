@@ -1,4 +1,3 @@
-import './lockdown';
 
 export const rawFoo = () => {
     console.log("foo function");
