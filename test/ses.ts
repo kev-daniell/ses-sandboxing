@@ -2,6 +2,7 @@ import assert from 'assert';
 import { describe, it } from 'node:test';
 import '../src/lockdown';
 import { foo, fooClass } from '../src';
+import { rawFooClass } from '../src/foo';
 
 // Test to verify that monkey patching coins.get is blocked
 describe('SES Negative Tests', function () {
@@ -45,6 +46,16 @@ describe('SES Negative Tests', function () {
       console.log('Array.prototype.push test');
       fooClass.prototype.test = () => { console.log('oevrride ')}
       const f = new fooClass();
+      f.test();
+      
+    })
+  });
+
+  it('Malicious raw foo class', function () {  
+    assert.throws(() => {
+      console.log('Array.prototype.push test');
+      rawFooClass.prototype.test = () => { console.log('oevrride ')}
+      const f = new rawFooClass();
       f.test();
       
     })
