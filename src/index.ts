@@ -5,5 +5,6 @@ import { rawFoo, rawFooClass }  from './foo';
 console.log('Math.random() =', Math.random());
 console.log('Date.now() =', Date.now());
 
+// test2 overriding previous commit 
 export const foo  = harden(rawFoo);
 export const fooClass = harden(rawFooClass);
