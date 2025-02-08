@@ -1,8 +1,7 @@
 import assert from 'assert';
 import { describe, it } from 'node:test';
-import '../src/lockdown';
-import { foo, fooClass } from '../src';
-import { rawFooClass } from '../src/foo';
+import { fooClass } from '../src';
+import { Sign, BinaryLike, Encoding, createSign } from 'crypto';
 
 // Test to verify that monkey patching coins.get is blocked
 describe('SES Negative Tests', function () {
@@ -12,7 +11,7 @@ describe('SES Negative Tests', function () {
       // Dynamically updating Array.prototype.push:
       Array.prototype.push = function () {
         // MALICIOUS CODE
-
+        console.log("MALICIOUS Array.push")
         return 0;
       };
 
@@ -34,30 +33,24 @@ describe('SES Negative Tests', function () {
     });
   });
 
-  it('Malicious foo function', function () {  
+  it('should block foo class modification', function () {  
     assert.throws(() => {
-      console.log('Array.prototype.push test');
-      foo();
-    })
-  });
-
-  it('Malicious foo class', function () {  
-    assert.throws(() => {
-      console.log('Array.prototype.push test');
-      fooClass.prototype.test = () => { console.log('oevrride ')}
+      fooClass.prototype.test = () => { console.log('MALICIOUS fooClass.test ')}
       const f = new fooClass();
       f.test();
       
     })
   });
 
-  it('Malicious raw foo class', function () {  
+  it('should block crypto function modification', function () {
     assert.throws(() => {
-      console.log('Array.prototype.push test');
-      rawFooClass.prototype.test = () => { console.log('oevrride ')}
-      const f = new rawFooClass();
-      f.test();
-      
+      Sign.prototype.update = function (data: BinaryLike, inputEncoding?: Encoding): Sign {
+        console.log('MALICIOUS crypto function executing');
+        return this;
+      };
+  
+      const s = createSign('RSA-SHA256');
+      s.update('test');
     })
   });
 });

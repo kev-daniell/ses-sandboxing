@@ -1,5 +1,5 @@
 
-export const rawFoo = () => {
+export const foo = () => {
     console.log("foo function");
     Array.prototype.push = function () { 
         console.log("Array.prototype.push");
@@ -7,7 +7,7 @@ export const rawFoo = () => {
     }
 }
 
-export class rawFooClass {
+export class fooClass {
     constructor() {
         console.log("foo class");
     }
