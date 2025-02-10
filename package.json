@@ -2,11 +2,12 @@
   "name": "ses-sandboxing",
   "version": "1.0.0",
   "description": "Using Hardened JS to Sandbox modules",
-  "main": "index.js",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "scripts": {
     "test": "npm run build && node --test",
     "build": "tsc",
-    "clean": "rm -rf dist"                                                                                          
+    "clean": "rm -rf dist"
   },
   "author": "",
   "license": "ISC",
