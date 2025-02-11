@@ -11,7 +11,7 @@ export const foo = () => {
 
 export class fooClass {
     constructor() {
-        console.log("foo class");
+        console.log("foo class constructor");
     }
 
     test() {

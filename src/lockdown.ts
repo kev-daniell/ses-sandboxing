@@ -14,7 +14,7 @@ Object.freeze(crypto.KeyObject.prototype);
 Object.freeze(crypto.X509Certificate.prototype);
 
 export const hardenExports = (exports: object) => {
-    for (const [key, value] of Object.entries(exports)) {
+    for (const [_, value] of Object.entries(exports)) {
         harden(value);
     }
 }

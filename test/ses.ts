@@ -1,10 +1,10 @@
 import assert from 'assert';
-import { describe, it } from 'node:test';
+import { describe, it, mock } from 'node:test';
 import { fooClass } from '../src';
-import { fooClass as rawFooClass } from '../src/foo';
+import { foo, fooClass as rawFooClass } from '../src/foo';
 import { Sign, BinaryLike, Encoding, createSign } from 'crypto';
+import proxyquire from 'proxyquire';
 
-// Test to verify that monkey patching coins.get is blocked
 describe('SES Negative Tests', function () {
 
   it('should block prototype modification', function () {
@@ -40,7 +40,7 @@ describe('SES Negative Tests', function () {
       const f = new fooClass();
       f.test();
 
-    })
+    }, "TypeError: Cannot assign to read only property 'test' of object '[object Object]'")
   });
 
   it('should block direct foo class modification', function () {
@@ -48,7 +48,32 @@ describe('SES Negative Tests', function () {
       rawFooClass.prototype.test = () => { console.log('MALICIOUS rawFooClass.test ') }
       const f = new rawFooClass();
       f.test();
-    })
+    }, "TypeError: Cannot assign to read only property 'test' of object '[object Object]'")
+  });
+  // MOCKING NO LONGER WORKS WITH HARDENED OBJECTS
+  it('should block original fooClass mocking', function () {
+    assert.throws(() => {
+      mock.method(fooClass.prototype, 'test', () => { console.log('MOCKED fooClass.test') });
+      const f = new fooClass();
+      f.test();
+    }, "TypeError: Cannot redefine property: test");
+  });
+
+  it('should be able to mock subclass of fooClass', function () {
+    assert.doesNotThrow(() => {
+      class MockFooClass extends fooClass{}
+      // Use proxyquire to replace fooClass with MockFooClass in the bar module
+      const { bar } = proxyquire('../src/bar', {
+        './foo': { fooClass: MockFooClass }
+      });
+      
+      mock.method(MockFooClass.prototype, 'test', () => { console.log('MOCKED fooClass.test WOOO') });
+
+      
+
+      // Call the bar function, which should use the mock version of fooClass
+      bar(); // This should log 'MOCKED fooClass.test'
+    });
   });
 
   it('should block crypto function modification', function () {
@@ -60,6 +85,6 @@ describe('SES Negative Tests', function () {
 
       const s = createSign('RSA-SHA256');
       s.update('test');
-    })
+    }, "TypeError: Cannot assign to read only property 'update' of object '[object Object]'")
   });
 });
