@@ -50,6 +50,7 @@ describe('SES Negative Tests', function () {
       f.test();
     }, "TypeError: Cannot assign to read only property 'test' of object '[object Object]'")
   });
+  
   // MOCKING NO LONGER WORKS WITH HARDENED OBJECTS
   it('should block original fooClass mocking', function () {
     assert.throws(() => {
@@ -67,12 +68,9 @@ describe('SES Negative Tests', function () {
         './foo': { fooClass: MockFooClass }
       });
       
-      mock.method(MockFooClass.prototype, 'test', () => { console.log('MOCKED fooClass.test WOOO') });
+      mock.method(MockFooClass.prototype, 'test', () => { console.log('MOCKED fooClass.test') });
 
-      
-
-      // Call the bar function, which should use the mock version of fooClass
-      bar(); // This should log 'MOCKED fooClass.test'
+      bar(); 
     });
   });
 
