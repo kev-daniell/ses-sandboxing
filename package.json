@@ -11,7 +11,6 @@
     "packages/*"
   ],
   "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@types/lodash": "^4.17.16",
     "@types/node": "^22.12.0",

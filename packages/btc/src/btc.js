@@ -1,3 +1,4 @@
+import { fooClass } from '@ses/utils'
 
 export class BTC {
     constructor() {
