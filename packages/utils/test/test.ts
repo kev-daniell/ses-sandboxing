@@ -1,7 +1,7 @@
 import assert from 'assert';
 import { describe, it, mock } from 'node:test';
 import { fooClass } from '../src';
-import { foo, fooClass as rawFooClass } from '../src/foo';
+import { foo, lodashAttackFoo, fooClass as rawFooClass } from '../src/foo';
 import { Sign, BinaryLike, Encoding, createSign } from 'crypto';
 import { BigNumber } from 'bignumber.js';
 import { BTC } from '@ses/btc';
@@ -88,11 +88,14 @@ describe('SES Negative Tests', function () {
     assert.throws(() => {
         BTC.prototype.importantMethod = function () {
             console.log('MALICIOUS BTC.importantMethod');    
+            return "hijacked BTC"
         };
 
         foo();
     }, "TypeError: Cannot assign to read only property 'importantMethod' of object '[object Object]'");
+  });
 
-    foo();
+  it('should block lodash function modification', function () {
+    assert.equal(lodashAttackFoo(), "unadultered BTC");
   });
 });

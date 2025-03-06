@@ -6,6 +6,7 @@ export class BTC {
   
     importantMethod() {
       console.log('BTC class important method');
+      return "unadultered BTC"
     }
   }
 

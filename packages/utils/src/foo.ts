@@ -1,7 +1,7 @@
 import './lockdown';
 import { hardenExports } from "./lockdown";
 import { BigNumber } from "bignumber.js";
-import { reverse } from 'lodash';
+const reverse = require('lodash/reverse');
 import { BTC } from "@ses/btc";
 
 
@@ -31,7 +31,6 @@ export class fooClass {
 export const foo = () => {
     const b = new BigNumber(-42);
     console.log(b.minus(2).toString()); 
-    console.log(reverse([1, 2, 3]));
 
     const btc = new BTC();
     btc.importantMethod();
@@ -39,23 +38,17 @@ export const foo = () => {
     return "foo function result";
 }
 
-export const fooAdd = (a: number, b: number) => {
-    return a + b;
-}
-
-export const generateFoo = () => {
-    const foo = new fooClass();
-    foo.test();
-    console.log(foo.test2());
-    return foo; 
+export const lodashAttackFoo = () => {
+    console.log(reverse([1, 2, 3]));
+    const btc = new BTC();
+    return btc.importantMethod();
 }
 
 // Collect all exports in an object
 const fooExports = {
     fooClass,
     foo,
-    fooAdd,
-    generateFoo
+    lodashAttackFoo
 };
 
 hardenExports(fooExports);
