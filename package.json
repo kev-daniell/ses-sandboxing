@@ -1,18 +1,19 @@
 {
-  "name": "ses-sandboxing",
+  "name": "quickjs-sandboxing",
   "version": "1.0.0",
-  "description": "Using Hardened JS to Sandbox modules",
-  "main": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "test": "npm run build --no-hardened && node --test",
-    "test-ses": "npm run build  && node --test",
-    "build": "tsc",
-    "clean": "rm -rf dist"
+    "build": "tsc --build --verbose",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/lodash": "^4.17.16",
     "@types/node": "^22.12.0",
     "@types/proxyquire": "^1.3.31",
     "proxyquire": "^2.1.3",
@@ -20,6 +21,8 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "bignumber.js": "^9.1.2",
+    "lodash": "^4.17.21",
     "ses": "^1.11.0"
   }
 }

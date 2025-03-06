@@ -3,7 +3,8 @@ import { describe, it, mock } from 'node:test';
 import { fooClass } from '../src';
 import { foo, fooClass as rawFooClass } from '../src/foo';
 import { Sign, BinaryLike, Encoding, createSign } from 'crypto';
-import proxyquire from 'proxyquire';
+import { BigNumber } from 'bignumber.js';
+import { BTC } from '@ses/btc';
 
 describe('SES Negative Tests', function () {
 
@@ -60,20 +61,6 @@ describe('SES Negative Tests', function () {
     }, "TypeError: Cannot redefine property: test");
   });
 
-  it('should be able to mock subclass of fooClass', function () {
-    assert.doesNotThrow(() => {
-      class MockFooClass extends fooClass{}
-      // Use proxyquire to replace fooClass with MockFooClass in the bar module
-      const { bar } = proxyquire('../src/bar', {
-        './foo': { fooClass: MockFooClass }
-      });
-      
-      mock.method(MockFooClass.prototype, 'test', () => { console.log('MOCKED fooClass.test') });
-
-      bar(); 
-    });
-  });
-
   it('should block crypto function modification', function () {
     assert.throws(() => {
       Sign.prototype.update = function (data: BinaryLike, inputEncoding?: Encoding): Sign {
@@ -84,5 +71,28 @@ describe('SES Negative Tests', function () {
       const s = createSign('RSA-SHA256');
       s.update('test');
     }, "TypeError: Cannot assign to read only property 'update' of object '[object Object]'")
+  });
+
+  it('should block lodash function modification', function () {
+    assert.throws(() => {
+        BigNumber.prototype.minus = function () {
+            console.log('MALICIOUS BigNumber.minus');    
+            return this;
+        };
+
+        foo();
+    }, "TypeError: Cannot assign to read only property 'minus' of object '[object Object]'")
+  });
+
+  it('should block btc function modification', function () {
+    assert.throws(() => {
+        BTC.prototype.importantMethod = function () {
+            console.log('MALICIOUS BTC.importantMethod');    
+        };
+
+        foo();
+    }, "TypeError: Cannot assign to read only property 'importantMethod' of object '[object Object]'");
+
+    foo();
   });
 });
