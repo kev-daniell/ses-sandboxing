@@ -5,12 +5,13 @@
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "test": "npm run build && node --test"
+    "test": "node --test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ses/btc": "^1.0.0"
+    "@ses/btc": "^1.0.0",
+    "@ses/x": "^1.0.0"
   }
 }

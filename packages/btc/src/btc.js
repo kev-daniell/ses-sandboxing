@@ -1,5 +1,3 @@
-import { fooClass } from '@ses/utils'
-
 export class BTC {
     constructor() {
       console.log('BTC class');

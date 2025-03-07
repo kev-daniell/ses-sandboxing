@@ -1,11 +1,10 @@
-import './lockdown.js';
 import { hardenExports } from "./lockdown.js";
 import { BigNumber } from "bignumber.js";
-// import { reverse } from 'lodash';
 import { BTC } from "@ses/btc";
+import { yCompromisedFromX, zCompromisedFromX, xCompromisedFromX } from "@ses/x";
 
-// harden(BigNumber);
-// harden(BTC);
+harden(BigNumber);
+harden(BTC);
 
 export class fooClass {
     prop; 
@@ -36,31 +35,37 @@ const unsafeFoo = () => {
     return "foo function result";
 }
 
-export const lodashAttackFoo = () => {
-    console.log(reverse([1, 2, 3]));
-    const btc = new BTC();
-    return btc.importantMethod();
+export const fooUsingDeps = (testingInput) => {
+    switch(testingInput) {
+        case "x":
+            return xCompromisedFromX();
+        case "y":
+            return yCompromisedFromX();
+        case "z":
+            return zCompromisedFromX();
+        default:
+            return "fooUsingDeps default";
+    }
 }
 
-const utilsCompartment = new Compartment({ console, unsafeFoo, BTC }, {}, {
-  resolveHook: (moduleSpecifier, moduleReferrer) =>
-    resolve(moduleSpecifier, moduleReferrer),
-  importHook: async moduleSpecifier => {
-    const moduleLocation = locate(moduleSpecifier);
-    const moduleText = await retrieve(moduleLocation);
-    return new ModuleStaticRecord(moduleText, moduleLocation);
-  },
-});
+// const utilsCompartment = new Compartment({ console, unsafeFoo, BTC }, {}, {
+//   resolveHook: (moduleSpecifier, moduleReferrer) =>
+//     resolve(moduleSpecifier, moduleReferrer),
+//   importHook: async moduleSpecifier => {
+//     const moduleLocation = locate(moduleSpecifier);
+//     const moduleText = await retrieve(moduleLocation);
+//     return new ModuleStaticRecord(moduleText, moduleLocation);
+//   },
+// });
 
-export const foo = () => {
-    return utilsCompartment.evaluate('unsafeFoo()')
-}
+// export const foo = () => {
+//     return utilsCompartment.evaluate('unsafeFoo()')
+// }
 
 // Collect all exports in an object
-// const fooExports = {
-//     fooClass,
-//     foo,
-//     lodashAttackFoo
-// };
+const fooExports = {
+    fooClass,
+    // foo,
+};
 
-// hardenExports(fooExports);
+hardenExports(fooExports);

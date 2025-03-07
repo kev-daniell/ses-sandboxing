@@ -1,8 +1,8 @@
 import assert from 'assert';
 import { describe, it, mock } from 'node:test';
-import { fooClass } from '../src';
-import { foo, lodashAttackFoo, fooClass as rawFooClass } from '../src/foo';
-import { Sign, BinaryLike, Encoding, createSign } from 'crypto';
+import { fooClass } from '../src/index.js';
+import { fooClass as rawFooClass } from '../src/foo.js';
+import { Sign, createSign } from 'crypto';
 import { BigNumber } from 'bignumber.js';
 import { BTC } from '@ses/btc';
 
@@ -17,7 +17,7 @@ describe('SES Negative Tests', function () {
         return 0;
       };
 
-      const arr: number[] = [];
+      const arr = [];
       arr.push(1);
     }, /Cannot assign to read only property 'push' of 'root.%ArrayPrototype%.push'/);
   });
@@ -41,7 +41,7 @@ describe('SES Negative Tests', function () {
       const f = new fooClass();
       f.test();
 
-    }, "TypeError: Cannot assign to read only property 'test' of object '[object Object]'")
+    }, { message: "Cannot assign to read only property 'test' of object '[object Object]'"})
   });
 
   it('should block direct foo class modification', function () {
@@ -49,7 +49,7 @@ describe('SES Negative Tests', function () {
       rawFooClass.prototype.test = () => { console.log('MALICIOUS rawFooClass.test ') }
       const f = new rawFooClass();
       f.test();
-    }, "TypeError: Cannot assign to read only property 'test' of object '[object Object]'")
+    }, { message: "Cannot assign to read only property 'test' of object '[object Object]'"})
   });
   
   // MOCKING NO LONGER WORKS WITH HARDENED OBJECTS
@@ -58,19 +58,19 @@ describe('SES Negative Tests', function () {
       mock.method(fooClass.prototype, 'test', () => { console.log('MOCKED fooClass.test') });
       const f = new fooClass();
       f.test();
-    }, "TypeError: Cannot redefine property: test");
+    }, { message: "Cannot redefine property: test" });
   });
 
-  it('should block crypto function modification', function () {
+  it('should block crypto f"}nction modification', function () {
     assert.throws(() => {
-      Sign.prototype.update = function (data: BinaryLike, inputEncoding?: Encoding): Sign {
+      Sign.prototype.update = function (data, inputEncoding) {
         console.log('MALICIOUS crypto function executing');
         return this;
       };
 
       const s = createSign('RSA-SHA256');
       s.update('test');
-    }, "TypeError: Cannot assign to read only property 'update' of object '[object Object]'")
+    }, { message: "Cannot assign to read only property 'update' of object '[object Object]'"})
   });
 
   it('should block lodash function modification', function () {
@@ -81,7 +81,7 @@ describe('SES Negative Tests', function () {
         };
 
         foo();
-    }, "TypeError: Cannot assign to read only property 'minus' of object '[object Object]'")
+    }, { message: "Cannot assign to read only property 'minus' of object '[object BigNumber]'"})
   });
 
   it('should block btc function modification', function () {
@@ -92,10 +92,6 @@ describe('SES Negative Tests', function () {
         };
 
         foo();
-    }, "TypeError: Cannot assign to read only property 'importantMethod' of object '[object Object]'");
-  });
-
-  it('should block lodash function modification', function () {
-    assert.equal(lodashAttackFoo(), "unadultered BTC");
+    }, { message: "Cannot assign to read only property 'importantMethod' of object '[object Object]'"});
   });
 });

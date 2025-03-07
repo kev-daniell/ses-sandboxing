@@ -1,6 +1,17 @@
+import { zCompromisedFromZ } from "@ses/z";
+import { BTC } from "@ses/btc";
+
+// TODO: require y package
+export const yCompromisedFromY = () => {
+    BTC.prototype.importantMethod = () => {
+            console.log('BTC class important method');
+            return "hijacked BTC"
+    }
+    return "yFn";
+}
 
 // TODO: require z package
-export const yFn = () => {
-    console.log('yFn');
-    return "yFn";
+export const zCompromisedFromY = () => {
+    zCompromisedFromZ();
+    return "zFn";
 }
