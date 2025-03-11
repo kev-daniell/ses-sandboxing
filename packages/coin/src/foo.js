@@ -48,12 +48,6 @@ export const fooUsingDeps = (testingInput) => {
     }
 }
 
-export const hardenExports = (exports) => {
-    for (const [_, value] of Object.entries(exports)) {
-        harden(value);
-    }
-}
-
 // Gather all exports into a single object
 const fooExports = {
     fooClass,
