@@ -20,8 +20,14 @@ This monorepo includes the following packages:
 This demonstrates that Hardened JavaScript can prevent global object mutation on any hardened object, regardless of where the require call to attack said object occurs. We have proven that this holds for 1st, 2nd, and 3rd degree dependencies.
 
 These tests can be found in: 
+
+
 `packages/coin/test/transitive.ts`
-Other tests that assert that we are in a locked down environment can be found in: `packages/coin/test/test.ts`
+
+Other tests that assert that we are in a locked down environment can be found in: 
+
+
+`packages/coin/test/test.ts`
 
 
 ## Testing
