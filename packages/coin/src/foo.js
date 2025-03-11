@@ -48,24 +48,16 @@ export const fooUsingDeps = (testingInput) => {
     }
 }
 
-// const utilsCompartment = new Compartment({ console, unsafeFoo, BTC }, {}, {
-//   resolveHook: (moduleSpecifier, moduleReferrer) =>
-//     resolve(moduleSpecifier, moduleReferrer),
-//   importHook: async moduleSpecifier => {
-//     const moduleLocation = locate(moduleSpecifier);
-//     const moduleText = await retrieve(moduleLocation);
-//     return new ModuleStaticRecord(moduleText, moduleLocation);
-//   },
-// });
+export const hardenExports = (exports) => {
+    for (const [_, value] of Object.entries(exports)) {
+        harden(value);
+    }
+}
 
-// export const foo = () => {
-//     return utilsCompartment.evaluate('unsafeFoo()')
-// }
-
-// Collect all exports in an object
+// Gather all exports into a single object
 const fooExports = {
     fooClass,
-    // foo,
+    foo,
 };
 
 hardenExports(fooExports);
