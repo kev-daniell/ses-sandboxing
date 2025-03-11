@@ -1,4 +1,4 @@
-import './lockdown.js';
+import '@ses/lockdown';
 export * from './foo.js';
 
 /**

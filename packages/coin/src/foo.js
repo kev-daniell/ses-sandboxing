@@ -1,4 +1,4 @@
-import { hardenExports } from "./lockdown.js";
+import { hardenExports } from "@ses/lockdown";
 import { BigNumber } from "bignumber.js";
 import { BTC } from "@ses/btc";
 import { yCompromisedFromX, zCompromisedFromX, xCompromisedFromX } from "@ses/x";
@@ -25,7 +25,7 @@ export class fooClass {
     }
 }
 
-const unsafeFoo = () => {
+const foo = () => {
     const b = new BigNumber(-42);
     console.log(b.minus(2).toString()); 
 

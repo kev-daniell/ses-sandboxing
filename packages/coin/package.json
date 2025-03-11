@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@ses/btc": "^1.0.0",
-    "@ses/x": "^1.0.0"
+    "@ses/x": "^1.0.0",
+    "@ses/lockdown": "^1.0.0"
   }
 }

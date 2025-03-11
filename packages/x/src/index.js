@@ -7,6 +7,9 @@ export const xCompromisedFromX = () => {
         return "hijacked BTC"
     }
 
+    const b = new BTC();
+    b.importantMethod();
+
     return "xFn";
 }
 
