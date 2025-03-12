@@ -1,2 +1,1 @@
-import '@ses/lockdown';
-export * from './btc.js';
+export * from "./btc.js";
