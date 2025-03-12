@@ -5,11 +5,10 @@
   "main": "src/index.js",
   "type": "module",
   "dependencies": {
-    "@ses/utils": "1.0.0",
     "@ses/lockdown": "1.0.0"
   },
   "scripts": {
-    "test": "npm run build && node --test"
+    "test": "node --test"
   },
   "keywords": [],
   "author": "",

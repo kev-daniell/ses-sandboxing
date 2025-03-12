@@ -9,12 +9,12 @@ functions.
 
 This monorepo includes the following packages:
 
-- `@ses/btc`: A dummy pacakage acting as a target for adversaries.
-- `@ses/utils`: Utility functions that acts as an attack vector for the outside package `@ses/x`.
-- `@ses/unprotected`: An unhardened package that demonstrates a successful attack from `@ses/x`.
-- `@ses/x`: A compromised package that executes an attack, required by `@ses/utils`.
-- `@ses/y`: Another compromised package that executes an attack, required by `@ses/x` (2nd degree dependency of utils).
-- `@ses/z`: Another compromised package that executes an attack, required by `@ses/y` (3rd degree dependency of utils).
+- `@ses/btc`: A dummy package acting as a target for adversaries.
+- `@ses/protected`: A hardened package with an unsuccessful attack from `@ses/x`.
+- `@ses/unprotected`: An unhardened package with a successful attack from `@ses/x`.
+- `@ses/x`: A compromised package that executes an attack, required by `@ses/protected`.
+- `@ses/y`: Another compromised package that executes an attack, required by `@ses/x` (2nd degree dependency of protected/unprotected).
+- `@ses/z`: Another compromised package that executes an attack, required by `@ses/y` (3rd degree dependency of protected/unprotected).
 
 ![alt text](public/image.png)
 
@@ -29,6 +29,14 @@ Other tests that assert that we are in a locked down environment can be found in
 `packages/coin/test/test.ts`
 
 ## Testing
+
+To run all tests
+
+```
+npm run test
+```
+
+To run tests in specific module
 
 ```
 npm run test --workspace @ses/{package-name}

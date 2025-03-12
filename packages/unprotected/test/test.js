@@ -14,12 +14,11 @@ test("should attack BTC successfully", () => {
 });
 
 test("should attack Array primitive successfully", () => {
-  Array.prototype.push = () => {
-    console.log("Array.prototype.push attack");
-    return 0;
-  };
-
   assert.doesNotThrow(() => {
+    Array.prototype.push = () => {
+      console.log("Array.prototype.push attack");
+      return 0;
+    };
     const arr = [];
     arr.push("some_value");
   });
