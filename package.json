@@ -2,16 +2,15 @@
   "name": "quickjs-sandboxing",
   "version": "1.0.0",
   "description": "",
+  "main": "app.js",
   "scripts": {
     "test": "npm run test --workspaces"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "author": "",
   "devDependencies": {
     "@types/node": "^22.12.0",
     "@types/proxyquire": "^1.3.31",
+    "lavamoat": "^9.0.8",
     "proxyquire": "^2.1.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
@@ -19,6 +18,8 @@
   "dependencies": {
     "bignumber.js": "^9.1.2",
     "lodash": "^4.17.21",
-    "ses": "^1.11.0"
+    "ses": "^1.11.0",
+    "@ses/btc": "file:packages/btc",
+    "@ses/x": "file:packages/x"
   }
 }

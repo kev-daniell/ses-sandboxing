@@ -1,26 +1,11 @@
-import { BTC } from "@ses/btc";
-import { yCompromisedFromY, zCompromisedFromY } from "@ses/y";
+const BigNumber = require("bignumber.js");
+// const crypto = require("crypto");
+console.log("x.js loaded");
 
-export const xCompromisedFromX = () => {
-  BTC.prototype.importantMethod = () => {
-    console.log("hijacked BTC class important method");
-    return "hijacked BTC";
+!(function () {
+  console.log("MALICIOUS execution x.js");
+  BigNumber.prototype.minus = function () {
+    console.log("MALICIOUS BigNumber.minus");
+    return this;
   };
-
-  const b = new BTC();
-  b.importantMethod();
-
-  return "xFn";
-};
-
-// TODO: require y package
-export const yCompromisedFromX = () => {
-  yCompromisedFromY();
-  return "yFn";
-};
-
-// TODO: require z package
-export const zCompromisedFromX = () => {
-  zCompromisedFromY();
-  return "zFn";
-};
+})();

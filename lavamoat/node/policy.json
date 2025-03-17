@@ -1,0 +1,18 @@
+{
+  "resources": {
+    "@ses/x": {
+      "globals": {
+        "console.log": true
+      },
+      "packages": {
+        "bignumber.js": true
+      }
+    },
+    "bignumber.js": {
+      "globals": {
+        "crypto": true,
+        "define": true
+      }
+    }
+  }
+}

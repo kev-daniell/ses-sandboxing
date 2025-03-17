@@ -1,5 +1,4 @@
 import "ses";
-import crypto from "crypto";
 
 lockdown({ stackFiltering: "verbose" });
 

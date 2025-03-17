@@ -1,8 +1,8 @@
 import assert from "assert";
 import { describe, it, mock } from "node:test";
-import { fooClass } from "../src/index.js";
-import { fooClass as directFooClass } from "../src/foo.js";
-import { BigNumber } from "bignumber.js";
+import { fooClass, foo } from "../src/index.js";
+import { bg, fooClass as directFooClass } from "../src/foo.js";
+// import { BigNumber } from "bignumber.js";
 import { BTC } from "@ses/btc";
 
 describe("SES Negative Tests", function () {
@@ -82,16 +82,15 @@ describe("SES Negative Tests", function () {
   it("should block lodash function modification", function () {
     assert.throws(
       () => {
-        BigNumber.prototype.minus = function () {
-          console.log("MALICIOUS BigNumber.minus");
-          return this;
-        };
+        // modifyBG();
+        bg();
       },
       {
         message:
           "Cannot assign to read only property 'minus' of object '[object BigNumber]'",
       }
     );
+    bg();
   });
 
   it("should block btc function modification", function () {
@@ -109,5 +108,6 @@ describe("SES Negative Tests", function () {
           "Cannot assign to read only property 'importantMethod' of object '[object Object]'",
       }
     );
+    foo();
   });
 });
