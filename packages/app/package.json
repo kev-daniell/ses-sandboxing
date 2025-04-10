@@ -1,0 +1,17 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "npx lavamoat app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bignumber.js": "^9.2.1",
+    "@ses/app-module": "^1.0.0",
+    "@ses/app-module-2": "^1.0.0",
+    "@ses/app-module-3": "^1.0.0"
+  }
+}
