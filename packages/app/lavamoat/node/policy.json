@@ -1,0 +1,20 @@
+{
+  "resources": {
+    "@ses/app-module": {
+      "globals": {
+        "console.log": true
+      }
+    },
+    "@ses/app-module-2": {
+      "globals": {
+        "console.log": true,
+        "process.env.SHELL": true
+      }
+    },
+    "@ses/app-module-3": {
+      "globals": {
+        "console.log": true
+      }
+    }
+  }
+}
