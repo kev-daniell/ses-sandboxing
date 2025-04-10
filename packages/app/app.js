@@ -12,7 +12,7 @@ test("should attack Array primitive successfully", () => {
   });
 });
 
-test('shoudl block unauthorized import to @ses/btc', () => {
+test('should block unauthorized import to @ses/btc', () => {
   assert.throws(() => {
     // app-module-3 attempts to import @ses/btc, but has no permission according to lavamoat/node/policy.json
     const appModule = require("@ses/app-module-3");
