@@ -34,7 +34,7 @@ test("should block environment variable dumping", function () {
 );
 });
 
-test("should restrict environment variable dumping to whitelisted SHELL variable", function () {
+test("should restrict environment variable access", function () {
   // SHELL is whitelisted in lavamoat/node/policy.json
   const appModule = require("@ses/app-module-2") 
 
@@ -42,3 +42,19 @@ test("should restrict environment variable dumping to whitelisted SHELL variable
   assert.strictEqual(appModule.envList[0], "SHELL=/bin/zsh");
 });
 
+test("should restrict console access", function () {
+  // console.warn IS NOT whitelisted in lavamoat/node/policy.json
+  // console.log IS whitelisted in lavamoat/node/policy.json
+  const appModule = require("@ses/app-module-2") 
+
+  console.warn("Console warning message");
+
+  assert.doesNotThrow(() => {
+    appModule.logMessage("This is a log message");
+  })
+
+  assert.throws(() => {
+    appModule.warnMessage("This is a warning message");
+  }, { message: "console.warn is not a function" });
+
+});
