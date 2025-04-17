@@ -1,7 +1,7 @@
 const { test } = require("node:test");
 const assert = require("assert");
 
-test("should attack Array primitive successfully", () => {
+test("should prevent Array primitive attack", () => {
   assert.throws(() => {
     Array.prototype.push = () => {
       console.log("Array.prototype.push attack");
@@ -9,6 +9,8 @@ test("should attack Array primitive successfully", () => {
     };
     const arr = [];
     arr.push("some_value");
+  }, {
+    message: "Cannot assign to read only property 'push' of 'root.%ArrayPrototype%.push'",
   });
 });
 
