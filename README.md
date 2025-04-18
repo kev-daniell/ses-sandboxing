@@ -1,14 +1,12 @@
-# SES Hardened Javascript Sandboxing
+# SES Hardened Javascript and LavaMoat Sandboxing
 
-This repository contains a monorepo setup for experimenting with SES (Secure EcmaScript) to
-create a hardened JavaScript sandboxing environment. The goal is to secure JavaScript execution
-by locking down the environment and preventing unauthorized access to sensitive information and
-functions.
+This repository contains a monorepo setup for experimenting with Hardened JavaScript from SES (Secure EcmaScript) and LavaMoat to defend against supply chain attacks. The goal is to secure JavaScript execution by locking down the environment and preventing unauthorized access to sensitive information and functions.
 
 ## Packages
 
 This monorepo includes the following packages:
 
+### Hardened JavaScript Testing Packages
 - `@ses/btc`: A dummy package acting as a target for adversaries.
 - `@ses/protected`: A hardened package with an unsuccessful attack from `@ses/x`.
 - `@ses/unprotected`: An unhardened package with a successful attack from `@ses/x`.
@@ -16,17 +14,14 @@ This monorepo includes the following packages:
 - `@ses/y`: Another compromised package that executes an attack, required by `@ses/x` (2nd degree dependency of protected/unprotected).
 - `@ses/z`: Another compromised package that executes an attack, required by `@ses/y` (3rd degree dependency of protected/unprotected).
 
-![alt text](public/image.png)
 
-This demonstrates that Hardened JavaScript can prevent global object mutation on any hardened object, regardless of where the require call to attack said object occurs. We have proven that this holds for 1st, 2nd, and 3rd degree dependencies.
-
-These tests can be found in:
-
-`packages/coin/test/transitive.ts`
-
-Other tests that assert that we are in a locked down environment can be found in:
-
-`packages/coin/test/test.ts`
+### LavaMoat Testing Packages
+- `@ses/app`: The main package containing LavaMoat tests.
+- `@ses/app-module`: A package that attempts to access all environment variables.
+- `@ses/app-module-2`: A package with restricted access to only the `SHELL` environment variable.
+- `@ses/app-module-3`: A package that attempts unauthorized imports of `@ses/btc`.
+- `@ses/btc`: A dummy package acting as a target for adversaries.  
+    - Attacked by `@ses/app-module-3`.
 
 ## Testing
 
