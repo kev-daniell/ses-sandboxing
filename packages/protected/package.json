@@ -13,6 +13,7 @@
   "dependencies": {
     "@ses/btc": "^1.0.0",
     "@ses/x": "^1.0.0",
-    "@ses/lockdown": "^1.0.0"
+    "@ses/lockdown": "^1.0.0",
+    "@ses/successful-attack": "^1.0.0"
   }
 }

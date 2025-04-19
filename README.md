@@ -23,6 +23,16 @@ This monorepo includes the following packages:
 - `@ses/btc`: A dummy package acting as a target for adversaries.  
     - Attacked by `@ses/app-module-3`.
 
+
+### Hardened JavaScript Limitations
+The file [`packages/unstoppable-attack/index.js`](packages/unstoppable-attack/index.js) demonstrates a critical limitation of Hardened JavaScript. A malicious package (`@ses/unstoppable-attack`) successfully executes a prototype attack on another dependency (`@ses/btc`) by mutating its prototype.
+
+While we could harden the exports of `@ses/btc` in this example (since it is a library we control), the issue becomes problematic when the target is an external dependency. Without modifying the external library to harden its objects, such attacks cannot be fully prevented in a Hardened JavaScript environment.
+
+### How LavaMoat Helps
+
+LavaMoat mitigates this issue by isolating each package in its own SES compartment and enforcing strict policies. This drastically reduces the blast radius of malicious packages to dependencies in their allowlist.
+
 ## Testing
 
 To run all tests
